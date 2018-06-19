@@ -99,6 +99,35 @@ int main(int argc, char **argv)
 	}
 
 
+	// Centre the mesh along the xy plane
+	float avg_x = 0;
+	float avg_y = 0;
+
+	for (size_t i = 0; i < triangles.size(); i++)
+	{
+		avg_x += triangles[i].vertex[0].x;
+		avg_x += triangles[i].vertex[1].x;
+		avg_x += triangles[i].vertex[2].x;
+		avg_y += triangles[i].vertex[0].y;
+		avg_y += triangles[i].vertex[1].y;
+		avg_y += triangles[i].vertex[2].y;
+	}
+
+	avg_y /= 3 * triangles.size();
+	avg_x /= 3 * triangles.size();
+
+	for (size_t i = 0; i < triangles.size(); i++)
+	{
+		triangles[i].vertex[0].x -= avg_x;
+		triangles[i].vertex[1].x -= avg_x;
+		triangles[i].vertex[2].x -= avg_x;
+
+		triangles[i].vertex[0].y -= avg_y;
+		triangles[i].vertex[1].y -= avg_y;
+		triangles[i].vertex[2].y -= avg_y;
+	}
+
+
 	get_vertices_and_normals_from_triangles(triangles, face_normals, vertices, vertex_normals);	
 	
 	glutInit(&argc, argv);
